@@ -3,11 +3,11 @@ import 'package:flutter_tailor_app/controller/cartcontroller.dart';
 import 'package:get/get.dart';
 
 class CArtTotal extends StatelessWidget {
-  final CartController controller = Get.find();
   CArtTotal({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var cartController = Get.find<CartController>();
     // return Obx(
     //   () => controller.items == 0
     //       ? SizedBox()
@@ -30,24 +30,21 @@ class CArtTotal extends StatelessWidget {
     //         ),
     // );
     return Obx(
-      () => controller.items == 0
-          ? SizedBox()
+      () => cartController.cartItems.value.data.isEmpty
+          ? const SizedBox()
           : Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(40),
                       topLeft: Radius.circular(40),
                     ),
                     boxShadow: [
-                      BoxShadow(
-                          color: Colors.black38,
-                          spreadRadius: 0,
-                          blurRadius: 5),
+                      BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 5),
                     ],
                   ),
                   width: MediaQuery.of(context).size.width,
@@ -62,9 +59,9 @@ class CArtTotal extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Items(" + controller.items.toString() + ")"),
+                            Text("Items( ${cartController.cartItems.value.data.length} )"),
                             //               ),
-                            Text("Total :" + controller.total.toString())
+                            // Text("Total :" + controller.total.toString())
                           ],
                         ),
                         Padding(
@@ -74,10 +71,8 @@ class CArtTotal extends StatelessWidget {
                               Expanded(
                                   child: ElevatedButton(
                                 style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      const Color(0xffffbf00)),
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
+                                  backgroundColor: MaterialStateProperty.all(const Color(0xffffbf00)),
+                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
@@ -87,10 +82,7 @@ class CArtTotal extends StatelessWidget {
                                   padding: EdgeInsets.all(15.0),
                                   child: Text(
                                     'Proceed to checkout',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w400),
+                                    style: TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.w400),
                                   ),
                                 ),
                                 onPressed: () {

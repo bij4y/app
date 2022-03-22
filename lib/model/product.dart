@@ -4,8 +4,7 @@
 
 import 'dart:convert';
 
-ProductModel productModelFromJson(String str) =>
-    ProductModel.fromJson(json.decode(str));
+ProductModel productModelFromJson(String str) => ProductModel.fromJson(json.decode(str));
 
 String productModelToJson(ProductModel data) => json.encode(data.toJson());
 
@@ -40,6 +39,7 @@ class Datum {
     required this.logo,
     required this.rating,
     required this.userId,
+    required this.qty,
   });
 
   int id;
@@ -55,6 +55,7 @@ class Datum {
   String logo;
   Rating rating;
   String userId;
+  int qty;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
@@ -70,6 +71,7 @@ class Datum {
         logo: json["logo"],
         rating: Rating.fromJson(json["rating"]),
         userId: json["user_id"],
+        qty: 1,
       );
 
   Map<String, dynamic> toJson() => {
@@ -86,6 +88,7 @@ class Datum {
         "logo": logo,
         "rating": rating.toJson(),
         "user_id": userId,
+        "qty": qty
       };
 }
 

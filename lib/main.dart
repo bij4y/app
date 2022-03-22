@@ -1,24 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_tailor_app/bindings/controller_binding.dart';
-import 'package:flutter_tailor_app/p/productprovider.dart';
-import 'package:flutter_tailor_app/pages/add_tailor.dart';
-import 'package:flutter_tailor_app/pages/search.dart';
-import 'package:flutter_tailor_app/pages/tailordetails.dart';
-import 'package:flutter_tailor_app/pages/tailorrating.dart';
-import 'package:flutter_tailor_app/tailorpages/tabdemo.dart';
-import 'package:flutter_tailor_app/tailorpages/tailorkodetails.dart';
-
-import 'package:flutter_tailor_app/utility/forgetpassword.dart';
-import 'package:flutter_tailor_app/utility/privacysetting.dart';
-import 'package:flutter_tailor_app/views/confirm_page.dart';
 import 'package:flutter_tailor_app/views/dashboard.dart';
-import 'package:flutter_tailor_app/views/details.dart';
-import 'package:flutter_tailor_app/views/final_cartpage.dart';
-import 'package:flutter_tailor_app/views/search.dart';
-import 'package:flutter_tailor_app/views/register.dart';
-import 'package:flutter_tailor_app/views/splash.dart';
+
 import 'package:get/get.dart';
 
 void main() {

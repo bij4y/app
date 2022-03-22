@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_tailor_app/model/cart_model.dart';
 import 'package:flutter_tailor_app/model/onboarding.dart';
 import 'package:flutter_tailor_app/model/product.dart';
 import 'package:flutter_tailor_app/model/tailormodel.dart';
@@ -17,8 +18,7 @@ class RemoteService {
       // SharedPreferences preferences = await SharedPreferences.getInstance();
       // String? token = preferences.getString('token');
 
-      var response =
-          await client.get(Uri.parse("$baseUrl/categorywith"), headers: {
+      var response = await client.get(Uri.parse("$baseUrl/categorywith"), headers: {
         'Accept': 'application/json',
         // 'Authorization': 'Bearer $token'
       });
@@ -38,8 +38,7 @@ class RemoteService {
       // SharedPreferences preferences = await SharedPreferences.getInstance();
       // String? token = preferences.getString('token');
 
-      var response =
-          await client.get(Uri.parse("$baseUrl/categorywith/$id"), headers: {
+      var response = await client.get(Uri.parse("$baseUrl/categorywith/$id"), headers: {
         'Accept': 'application/json',
         // 'Authorization': 'Bearer $token'
       });
@@ -118,10 +117,7 @@ class RemoteService {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       String? token = preferences.getString('token');
 
-      var response = await http.get(Uri.parse("$baseUrl/user"), headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token'
-      });
+      var response = await http.get(Uri.parse("$baseUrl/user"), headers: {'Accept': 'application/json', 'Authorization': 'Bearer $token'});
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
         return UserModel.fromJson(jsonData);
@@ -177,8 +173,7 @@ class RemoteService {
       // SharedPreferences preferences = await SharedPreferences.getInstance();
       // String? token = preferences.getString('token');
 
-      var response =
-          await http.get(Uri.parse("$baseUrl/onboarding1"), headers: {
+      var response = await http.get(Uri.parse("$baseUrl/onboarding1"), headers: {
         'Accept': 'application/json',
       });
       if (response.statusCode == 200) {
@@ -197,8 +192,7 @@ class RemoteService {
       // SharedPreferences preferences = await SharedPreferences.getInstance();
       // String? token = preferences.getString('token');
 
-      var response =
-          await http.get(Uri.parse("$baseUrl/onboarding2"), headers: {
+      var response = await http.get(Uri.parse("$baseUrl/onboarding2"), headers: {
         'Accept': 'application/json',
       });
       if (response.statusCode == 200) {
@@ -221,11 +215,48 @@ class RemoteService {
           headers: {
             'Accept': 'application/json',
             'Content-type': 'application/json',
-            'Authorization':
-                'Bearer 49|zQW1JAbyEbPszkXaVcTgpcEEyOp5fl2jgSdfHm6R'
+            'Authorization': 'Bearer 49|zQW1JAbyEbPszkXaVcTgpcEEyOp5fl2jgSdfHm6R'
           },
           body: jsonEncode(data));
       print(response.body);
+    } catch (e) {
+      Get.snackbar("Error", e.toString());
+    }
+  }
+
+  static Future deleteCatItem(int id) async {
+    try {
+      // SharedPreferences preferences = await SharedPreferences.getInstance();
+      // String? token = preferences.getString('token');
+
+      var response = await client.delete(
+        Uri.parse("$baseUrl/cart/$id"),
+        headers: {
+          'Accept': 'application/json',
+          'Content-type': 'application/json',
+          'Authorization': 'Bearer 49|zQW1JAbyEbPszkXaVcTgpcEEyOp5fl2jgSdfHm6R'
+        },
+      );
+      print(response.body);
+    } catch (e) {
+      Get.snackbar("Error", e.toString());
+    }
+  }
+
+  //Fetch Cart Items
+  Future<CartModel?> fetchCartDetails() async {
+    try {
+      // SharedPreferences preferences = await SharedPreferences.getInstance();
+      // String? token = preferences.getString('token');
+
+      var response = await client.get(Uri.parse("$baseUrl/cart"),
+          headers: {'Accept': 'application/json', 'Authorization': 'Bearer 49|zQW1JAbyEbPszkXaVcTgpcEEyOp5fl2jgSdfHm6R'});
+      if (response.statusCode == 200) {
+        var jsonData = response.body;
+        return cartModelFromJson(jsonData);
+      } else {
+        return null;
+      }
     } catch (e) {
       Get.snackbar("Error", e.toString());
     }

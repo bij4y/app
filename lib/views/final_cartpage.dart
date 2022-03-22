@@ -299,8 +299,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tailor_app/controller/cartcontroller.dart';
 import 'package:flutter_tailor_app/model/tailormodel.dart';
+import 'package:flutter_tailor_app/services/tailorservices.dart';
 import 'package:flutter_tailor_app/utility/url.dart';
-import 'package:flutter_tailor_app/views/cart_total.dart';
 import 'package:get/get.dart';
 
 class CardProducts extends StatelessWidget {
@@ -309,25 +309,35 @@ class CardProducts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var cartController = Get.find<CartController>();
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cart"),
+        title: const Text("Cart"),
       ),
-      bottomNavigationBar: CArtTotal(),
+      // bottomNavigationBar: CArtTotal(),
       body: Obx(
         () => Container(
-          child: controller.items == 0
-              ? Center(
+          child: cartController.cartItems.value.data.isEmpty
+              ? const Center(
                   child: Text("No items in a bucket"),
                 )
               : ListView.builder(
-                  itemCount: controller.products.length,
+                  itemCount: cartController.cartItems.value.data.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return CartProductsCard(
-                      controller: controller,
-                      index: index,
-                      product: controller.products.keys.toList()[index],
-                      quantity: controller.products.values.toList()[index],
+                    var mydata = cartController.cartItems.value.data[index];
+                    return Card(
+                      child: ListTile(
+                        title: Text(mydata.productName),
+                        subtitle: Text("${mydata.qty} x ${mydata.rate} = ${mydata.amount}"),
+                        trailing: IconButton(
+                            onPressed: () {
+                              RemoteService.deleteCatItem(mydata.id).whenComplete(() {
+                                cartController.getCartData();
+                              });
+                            },
+                            icon: const Icon(Icons.delete)),
+                      ),
                     );
                     // return Text(controller.quantity);
                   }),
@@ -337,79 +347,75 @@ class CardProducts extends StatelessWidget {
   }
 }
 
-class CartProductsCard extends StatelessWidget {
-  final CartController? controller;
-  final Product? product;
-  final int? quantity;
-  final int? index;
-  const CartProductsCard(
-      {Key? key, this.controller, this.index, this.product, this.quantity})
-      : super(key: key);
+// class CartProductsCard extends StatelessWidget {
+//   final CartController? controller;
+//   final Product? product;
+//   final int? quantity;
+//   final int? index;
+//   const CartProductsCard({Key? key, this.controller, this.index, this.product, this.quantity}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-        child: Row(children: [
-      Card(
-        child: Container(
-          margin: const EdgeInsets.all(10),
-          width: 80,
-          height: 80,
-          decoration: BoxDecoration(
-            // shape: BoxShape.circle,
-            image: DecorationImage(
-                image: NetworkImage(ApiUrl().url + product!.image),
-                fit: BoxFit.cover),
-          ),
-        ),
-      ),
-      const SizedBox(
-        width: 10,
-      ),
-      Column(
-        // mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text(
-            product!.name,
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
-          ),
-          Text(
-            "Rs." + product!.sp.toString(),
-            style: TextStyle(fontSize: 20),
-          ),
-        ],
-      ),
-      Padding(
-        padding: const EdgeInsets.only(left: 5),
-        child: Row(
-          children: [
-            Card(
-              child: Row(
-                children: [
-                  Card(
-                    child: IconButton(
-                        onPressed: () {
-                          controller!.removeProduct(product!);
-                        },
-                        icon: Icon(Icons.remove)),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Text('$quantity'),
-                  ),
-                  Card(
-                    child: IconButton(
-                        onPressed: () {
-                          controller!.addProduct(product!);
-                        },
-                        icon: Icon(Icons.add)),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    ]));
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Card(
+//         child: Row(children: [
+//       Card(
+//         child: Container(
+//           margin: const EdgeInsets.all(10),
+//           width: 80,
+//           height: 80,
+//           decoration: BoxDecoration(
+//             // shape: BoxShape.circle,
+//             image: DecorationImage(image: NetworkImage(ApiUrl().url + product!.image), fit: BoxFit.cover),
+//           ),
+//         ),
+//       ),
+//       const SizedBox(
+//         width: 10,
+//       ),
+//       Column(
+//         // mainAxisAlignment: MainAxisAlignment.start,
+//         children: [
+//           Text(
+//             product!.name,
+//             style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+//           ),
+//           Text(
+//             "Rs." + product!.sp.toString(),
+//             style: TextStyle(fontSize: 20),
+//           ),
+//         ],
+//       ),
+//       Padding(
+//         padding: const EdgeInsets.only(left: 5),
+//         child: Row(
+//           children: [
+//             Card(
+//               child: Row(
+//                 children: [
+//                   Card(
+//                     child: IconButton(
+//                         onPressed: () {
+//                           controller!.removeProduct(product!);
+//                         },
+//                         icon: Icon(Icons.remove)),
+//                   ),
+//                   Padding(
+//                     padding: EdgeInsets.symmetric(horizontal: 10),
+//                     child: Text('$quantity'),
+//                   ),
+//                   Card(
+//                     child: IconButton(
+//                         onPressed: () {
+//                           controller!.addProduct(product!);
+//                         },
+//                         icon: Icon(Icons.add)),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     ]));
+//   }
+// }

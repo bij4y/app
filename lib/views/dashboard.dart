@@ -698,6 +698,7 @@ import 'package:flutter_tailor_app/tailorpages/tailorkodetails.dart';
 import 'package:flutter_tailor_app/utility/form.dart';
 import 'package:flutter_tailor_app/utility/url.dart';
 import 'package:flutter_tailor_app/views/drawer.dart';
+import 'package:flutter_tailor_app/views/final_cartpage.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:searchbar_animation/searchbar_animation.dart';
@@ -707,7 +708,7 @@ class DashboradScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CartController cartcountroller = Get.find();
+    var cartcountroller = Get.find<CartController>();
     var usercontroller = Get.put(UserController());
     return Scaffold(
       drawer: DrawerScreen(),
@@ -727,12 +728,11 @@ class DashboradScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushNamed(context, 'search');
                     }),
-                cartcountroller.items == 0
+                cartcountroller.cartItems.value.data.isEmpty
                     ? const SizedBox()
                     : Text(
-                        cartcountroller.items.toString(),
-                        style:
-                            const TextStyle(fontSize: 15, color: Colors.black),
+                        "${cartcountroller.cartItems.value.data.length}",
+                        style: const TextStyle(fontSize: 15, color: Colors.black),
                       ),
                 IconButton(
                     icon: const Icon(
@@ -740,10 +740,8 @@ class DashboradScreen extends StatelessWidget {
                       color: Colors.black,
                     ),
                     onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        'cart',
-                      );
+                      cartcountroller.getCartData();
+                      Get.to(() => CardProducts());
                     })
               ],
             ),
@@ -789,8 +787,7 @@ class DashboradScreen extends StatelessWidget {
                               color: Colors.white,
                             ),
                           ),
-                          subtitle: const Text("Nepal",
-                              style: TextStyle(color: Colors.black)),
+                          subtitle: const Text("Nepal", style: TextStyle(color: Colors.black)),
                         ),
                         // Padding(
                         //   padding: const EdgeInsets.all(15.0),
@@ -879,8 +876,7 @@ class CustomShoes extends StatelessWidget {
               child: Text(
                 "Shoes",
                 textScaleFactor: 1.3,
-                style:
-                    TextStyle(fontWeight: FontWeight.w400, color: Colors.black),
+                style: TextStyle(fontWeight: FontWeight.w400, color: Colors.black),
               ),
             ),
           ),
@@ -897,33 +893,27 @@ class CustomShoes extends StatelessWidget {
                 ),
                 CustomFabrics(
                   title: "Sneakers",
-                  image:
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPugFPbSHtLVsqLVYJElca6wokn_LS8kYAFw&usqp=CAU",
+                  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPugFPbSHtLVsqLVYJElca6wokn_LS8kYAFw&usqp=CAU",
                 ),
                 CustomFabrics(
                   title: "Boot",
-                  image:
-                      "https://5.imimg.com/data5/NH/SK/AD/ANDROID-31943666/product-jpeg-500x500.jpg",
+                  image: "https://5.imimg.com/data5/NH/SK/AD/ANDROID-31943666/product-jpeg-500x500.jpg",
                 ),
                 CustomFabrics(
                   title: "Fabindia",
-                  image:
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnBrHi1vkQar1BTKhJfUAHAQMGUeph9STKGw&usqp=CAU",
+                  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnBrHi1vkQar1BTKhJfUAHAQMGUeph9STKGw&usqp=CAU",
                 ),
                 CustomFabrics(
                   title: "Bombay Rayon",
-                  image:
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM-GL2oqtlkDG0qhYKaXwH04hWnr5Pgi5A-g&usqp=CAU",
+                  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM-GL2oqtlkDG0qhYKaXwH04hWnr5Pgi5A-g&usqp=CAU",
                 ),
                 CustomFabrics(
                   title: "Ormezzano",
-                  image:
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzZxg0jPnvKadplEuJPYmgUCbOLL5BwV9b5g&usqp=CAU",
+                  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzZxg0jPnvKadplEuJPYmgUCbOLL5BwV9b5g&usqp=CAU",
                 ),
                 CustomFabrics(
                   title: "Siyarams",
-                  image:
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2Bw__QshQySyQIaOTDlstbpW3jnWVWSBXCg&usqp=CAU",
+                  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2Bw__QshQySyQIaOTDlstbpW3jnWVWSBXCg&usqp=CAU",
                 ),
               ],
             ),
@@ -966,8 +956,7 @@ class CustomTailorsNearYou extends StatelessWidget {
               child: Text(
                 "Tailors Near You",
                 textScaleFactor: 1.3,
-                style:
-                    TextStyle(fontWeight: FontWeight.w400, color: Colors.black),
+                style: TextStyle(fontWeight: FontWeight.w400, color: Colors.black),
               ),
             ),
           ),
@@ -988,8 +977,7 @@ class CustomTailorsNearYou extends StatelessWidget {
                         children: [
                           GestureDetector(
                               onTap: () {
-                                tailorcontroller.fetchProduct(tailorcontroller
-                                    .tailorlist.value.data[index].id);
+                                tailorcontroller.fetchProduct(tailorcontroller.tailorlist.value.data[index].id);
                                 Get.to(() => const TailorDetails());
                               },
                               child: Card(
@@ -1001,8 +989,7 @@ class CustomTailorsNearYou extends StatelessWidget {
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Image.network(
-                                          tailorcontroller.tailorlist.value
-                                              .data[index].feature,
+                                          tailorcontroller.tailorlist.value.data[index].feature,
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -1013,8 +1000,7 @@ class CustomTailorsNearYou extends StatelessWidget {
                                     Column(
                                       children: [
                                         Text(
-                                          tailorcontroller.tailorlist.value
-                                              .data[index].name,
+                                          tailorcontroller.tailorlist.value.data[index].name,
                                           style: const TextStyle(
                                             fontSize: 25,
                                           ),
@@ -1023,8 +1009,7 @@ class CustomTailorsNearYou extends StatelessWidget {
                                           children: [
                                             const Icon(Icons.place),
                                             Text(
-                                              tailorcontroller.tailorlist.value
-                                                  .data[index].address,
+                                              tailorcontroller.tailorlist.value.data[index].address,
                                             ),
                                           ],
                                         ),
@@ -1076,8 +1061,7 @@ class CustomListview extends StatelessWidget {
               child: Text(
                 "Fabrics",
                 textScaleFactor: 1.3,
-                style:
-                    TextStyle(fontWeight: FontWeight.w400, color: Colors.black),
+                style: TextStyle(fontWeight: FontWeight.w400, color: Colors.black),
               ),
             ),
           ),
@@ -1089,37 +1073,30 @@ class CustomListview extends StatelessWidget {
               children: const [
                 CustomFabrics(
                   title: "Raymond",
-                  image:
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOYXtGacH4lWrNV8B8wruoGQE_kkSU5QrF2Q&usqp=CAU",
+                  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOYXtGacH4lWrNV8B8wruoGQE_kkSU5QrF2Q&usqp=CAU",
                 ),
                 CustomFabrics(
                     title: "Loro Piana",
-                    image:
-                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZ3QOzdwc6NH96AoEnjIpozN_Q3pcyRHF5FA&usqp=CAU"),
+                    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZ3QOzdwc6NH96AoEnjIpozN_Q3pcyRHF5FA&usqp=CAU"),
                 CustomFabrics(
                   title: "Vardhman",
-                  image:
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0QnGQ4f9OnPHchsIj8_JQ51zH_y9AcYTjdg&usqp=CAU",
+                  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0QnGQ4f9OnPHchsIj8_JQ51zH_y9AcYTjdg&usqp=CAU",
                 ),
                 CustomFabrics(
                   title: "Fabindia",
-                  image:
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnBrHi1vkQar1BTKhJfUAHAQMGUeph9STKGw&usqp=CAU",
+                  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnBrHi1vkQar1BTKhJfUAHAQMGUeph9STKGw&usqp=CAU",
                 ),
                 CustomFabrics(
                   title: "Bombay Rayon",
-                  image:
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM-GL2oqtlkDG0qhYKaXwH04hWnr5Pgi5A-g&usqp=CAU",
+                  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM-GL2oqtlkDG0qhYKaXwH04hWnr5Pgi5A-g&usqp=CAU",
                 ),
                 CustomFabrics(
                   title: "Ormezzano",
-                  image:
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzZxg0jPnvKadplEuJPYmgUCbOLL5BwV9b5g&usqp=CAU",
+                  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzZxg0jPnvKadplEuJPYmgUCbOLL5BwV9b5g&usqp=CAU",
                 ),
                 CustomFabrics(
                   title: "Siyarams",
-                  image:
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2Bw__QshQySyQIaOTDlstbpW3jnWVWSBXCg&usqp=CAU",
+                  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2Bw__QshQySyQIaOTDlstbpW3jnWVWSBXCg&usqp=CAU",
                 ),
               ],
             ),
@@ -1184,8 +1161,7 @@ class CustomRequestStitch extends StatelessWidget {
                       Navigator.pushNamed(context, "/dashboard");
                     },
                     style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(const Color(0xFF073B4C)),
+                      backgroundColor: MaterialStateProperty.all(const Color(0xFF073B4C)),
                       // 0xff1A2D50
                     ),
                     child: const Text('Request now'),
@@ -1222,9 +1198,7 @@ class CustomRequestForm extends StatelessWidget {
             hintText: "$title",
           ),
           validator: (String? value) {
-            return (value != null && value.contains('@'))
-                ? 'Do not use the @ char.'
-                : null;
+            return (value != null && value.contains('@')) ? 'Do not use the @ char.' : null;
           },
         ),
       ),
@@ -1260,8 +1234,7 @@ class CustomFabrics extends StatelessWidget {
                 height: 100,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  image: DecorationImage(
-                      image: NetworkImage('$image'), fit: BoxFit.fill),
+                  image: DecorationImage(image: NetworkImage('$image'), fit: BoxFit.fill),
                 ),
               ),
               Text("$title"),
@@ -1405,9 +1378,7 @@ class CustomHomeSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: TextForm.horizontalScreenPadding,
-          vertical: TextForm.verticalscreenPadding),
+      padding: EdgeInsets.symmetric(horizontal: TextForm.horizontalScreenPadding, vertical: TextForm.verticalscreenPadding),
       child: TextFormField(
         decoration: const InputDecoration(
           hintText: "Search Tailor...",
