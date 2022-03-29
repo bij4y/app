@@ -296,6 +296,8 @@
 //   }
 // }
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_tailor_app/controller/cartcontroller.dart';
 import 'package:flutter_tailor_app/model/tailormodel.dart';
@@ -311,36 +313,47 @@ class CardProducts extends StatelessWidget {
   Widget build(BuildContext context) {
     var cartController = Get.find<CartController>();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Cart"),
-      ),
-      // bottomNavigationBar: CArtTotal(),
-      body: Obx(
-        () => Container(
-          child: cartController.cartItems.value.data.isEmpty
-              ? const Center(
-                  child: Text("No items in a bucket"),
-                )
-              : ListView.builder(
-                  itemCount: cartController.cartItems.value.data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    var mydata = cartController.cartItems.value.data[index];
-                    return Card(
-                      child: ListTile(
-                        title: Text(mydata.productName),
-                        subtitle: Text("${mydata.qty} x ${mydata.rate} = ${mydata.amount}"),
-                        trailing: IconButton(
-                            onPressed: () {
-                              RemoteService.deleteCatItem(mydata.id).whenComplete(() {
-                                cartController.getCartData();
-                              });
-                            },
-                            icon: const Icon(Icons.delete)),
-                      ),
-                    );
-                    // return Text(controller.quantity);
-                  }),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.grey,
+          title: const Text("Cart"),
+          centerTitle: true,
+        ),
+        // bottomNavigationBar: CArtTotal(),
+        body: Obx(
+          () => Container(
+            child: cartController.cartItems.value.data.isEmpty
+                ? const Center(
+                    child: Text("No items in a cart"),
+                  )
+                : ListView.builder(
+                    itemCount: cartController.cartItems.value.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      var mydata = cartController.cartItems.value.data[index];
+                      return Column(
+                        children: [
+                          Card(
+                            child: ListTile(
+                              title: Text(mydata.productName),
+                              subtitle: Text(
+                                  "${mydata.qty} x ${mydata.rate} = ${mydata.amount}"),
+                              trailing: IconButton(
+                                  onPressed: () {
+                                    RemoteService.deleteCatItem(mydata.id)
+                                        .whenComplete(() {
+                                      cartController.getCartData();
+                                    });
+                                  },
+                                  icon: const Icon(Icons.delete)),
+                            ),
+                          ),
+                        ],
+                      );
+
+                      // return Text(controller.quantity);
+                    }),
+          ),
         ),
       ),
     );

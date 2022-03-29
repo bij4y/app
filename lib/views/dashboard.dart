@@ -710,147 +710,151 @@ class DashboradScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var cartcountroller = Get.find<CartController>();
     var usercontroller = Get.put(UserController());
-    return Scaffold(
-      drawer: DrawerScreen(),
-      //--------------------appbar---------------------//
-      appBar: AppBar(
-        backgroundColor: Colors.grey,
-        elevation: 1,
-        actions: [
-          Obx(
-            () => Row(
-              children: <Widget>[
-                IconButton(
-                    icon: const Icon(
-                      Icons.search,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, 'search');
-                    }),
-                cartcountroller.cartItems.value.data.isEmpty
-                    ? const SizedBox()
-                    : Text(
-                        "${cartcountroller.cartItems.value.data.length}",
-                        style: const TextStyle(fontSize: 15, color: Colors.black),
+    return SafeArea(
+      child: Scaffold(
+        drawer: DrawerScreen(),
+        //--------------------appbar---------------------//
+        appBar: AppBar(
+          backgroundColor: Colors.grey,
+          elevation: 1,
+          actions: [
+            Obx(
+              () => Row(
+                children: <Widget>[
+                  IconButton(
+                      icon: const Icon(
+                        Icons.search,
+                        color: Colors.black,
                       ),
-                IconButton(
-                    icon: const Icon(
-                      Icons.shopping_cart,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {
-                      cartcountroller.getCartData();
-                      Get.to(() => CardProducts());
-                    })
-              ],
-            ),
-          )
-        ],
-        centerTitle: true,
-        title: const Text(
-          "Tailor",
-          style: TextStyle(color: Colors.black),
+                      onPressed: () {
+                        Navigator.pushNamed(context, 'search');
+                      }),
+                  cartcountroller.cartItems.value.data.isEmpty
+                      ? const SizedBox()
+                      : Text(
+                          "${cartcountroller.cartItems.value.data.length}",
+                          style: const TextStyle(
+                              fontSize: 15, color: Colors.black),
+                        ),
+                  IconButton(
+                      icon: const Icon(
+                        Icons.shopping_cart,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        cartcountroller.getCartData();
+                        Get.to(() => CardProducts());
+                      })
+                ],
+              ),
+            )
+          ],
+          centerTitle: true,
+          title: const Text(
+            "Tailor",
+            style: TextStyle(color: Colors.black),
+          ),
         ),
-      ),
-      //--------------------appbar Ends---------------------//
+        //--------------------appbar Ends---------------------//
 
-      //--------------------body Ends---------------------//
-      body: SingleChildScrollView(
-        child: Container(
-          color: const Color(0xffD5DADA),
-          child: Column(
-            children: [
-              Column(
-                children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color.fromRGBO(0, 169, 191, 1),
-                          Colors.greenAccent,
+        //--------------------body Ends---------------------//
+        body: SingleChildScrollView(
+          child: Container(
+            color: const Color(0xffD5DADA),
+            child: Column(
+              children: [
+                Column(
+                  children: [
+                    Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color.fromRGBO(0, 169, 191, 1),
+                            Colors.greenAccent,
+                          ],
+                        ),
+                      ),
+                      child: Column(
+                        children: <Widget>[
+                          const ListTile(
+                            horizontalTitleGap: -8,
+                            leading: Icon(
+                              Icons.place_outlined,
+                              size: 30,
+                              color: Colors.white,
+                            ),
+                            title: const Text(
+                              'Deliver to ithari ',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            subtitle: const Text("Nepal",
+                                style: TextStyle(color: Colors.black)),
+                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.all(15.0),
+                          //   child: SearchBarAnimation(
+                          //     textEditingController: TextEditingController(),
+                          //     isOriginalAnimation: true,
+                          //     enableKeyboardFocus: true,
+                          //     isSearchBoxOnRightSide: true,
+                          //     onExpansionComplete: () {
+                          //       debugPrint(
+                          //           'do something just after searchbox is opened.');
+                          //     },
+                          //     onCollapseComplete: () {
+                          //       debugPrint(
+                          //           'do something just after searchbox is closed.');
+                          //     },
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
-                    child: Column(
-                      children: <Widget>[
-                        const ListTile(
-                          horizontalTitleGap: -8,
-                          leading: Icon(
-                            Icons.place_outlined,
-                            size: 30,
-                            color: Colors.white,
-                          ),
-                          title: const Text(
-                            'Deliver to ithari ',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                          subtitle: const Text("Nepal", style: TextStyle(color: Colors.black)),
+                  ],
+                ),
+                Container(
+                  color: Colors.white,
+                  height: 5,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Container(
+                      height: 170,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: Image.network(
+                          "https://widethread.com/wp-content/uploads/2019/08/FB-Cover-min-1024x334.jpg",
+                          fit: BoxFit.cover,
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(15.0),
-                        //   child: SearchBarAnimation(
-                        //     textEditingController: TextEditingController(),
-                        //     isOriginalAnimation: true,
-                        //     enableKeyboardFocus: true,
-                        //     isSearchBoxOnRightSide: true,
-                        //     onExpansionComplete: () {
-                        //       debugPrint(
-                        //           'do something just after searchbox is opened.');
-                        //     },
-                        //     onCollapseComplete: () {
-                        //       debugPrint(
-                        //           'do something just after searchbox is closed.');
-                        //     },
-                        //   ),
-                        // ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Container(
-                color: Colors.white,
-                height: 5,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Container(
-                    height: 170,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: Image.network(
-                        "https://widethread.com/wp-content/uploads/2019/08/FB-Cover-min-1024x334.jpg",
-                        fit: BoxFit.cover,
                       ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: const Color(0xff30404f),
+                      ),
+                      width: MediaQuery.of(context).size.width,
                     ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: const Color(0xff30404f),
-                    ),
-                    width: MediaQuery.of(context).size.width,
                   ),
                 ),
-              ),
-              const CustomTailorsNearYou(),
-              const SizedBox(
-                height: 5,
-              ),
-              const CustomListview(),
-              const SizedBox(
-                height: 5,
-              ),
-              const CustomShoes(),
-              const SizedBox(
-                height: 5,
-              ),
-              const CustomRequestStitch(),
-            ],
+                const CustomTailorsNearYou(),
+                const SizedBox(
+                  height: 5,
+                ),
+                const CustomListview(),
+                const SizedBox(
+                  height: 5,
+                ),
+                const CustomShoes(),
+                const SizedBox(
+                  height: 5,
+                ),
+                const CustomRequestStitch(),
+              ],
+            ),
           ),
         ),
       ),
@@ -876,7 +880,8 @@ class CustomShoes extends StatelessWidget {
               child: Text(
                 "Shoes",
                 textScaleFactor: 1.3,
-                style: TextStyle(fontWeight: FontWeight.w400, color: Colors.black),
+                style:
+                    TextStyle(fontWeight: FontWeight.w400, color: Colors.black),
               ),
             ),
           ),
@@ -893,27 +898,33 @@ class CustomShoes extends StatelessWidget {
                 ),
                 CustomFabrics(
                   title: "Sneakers",
-                  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPugFPbSHtLVsqLVYJElca6wokn_LS8kYAFw&usqp=CAU",
+                  image:
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPugFPbSHtLVsqLVYJElca6wokn_LS8kYAFw&usqp=CAU",
                 ),
                 CustomFabrics(
                   title: "Boot",
-                  image: "https://5.imimg.com/data5/NH/SK/AD/ANDROID-31943666/product-jpeg-500x500.jpg",
+                  image:
+                      "https://5.imimg.com/data5/NH/SK/AD/ANDROID-31943666/product-jpeg-500x500.jpg",
                 ),
                 CustomFabrics(
                   title: "Fabindia",
-                  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnBrHi1vkQar1BTKhJfUAHAQMGUeph9STKGw&usqp=CAU",
+                  image:
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnBrHi1vkQar1BTKhJfUAHAQMGUeph9STKGw&usqp=CAU",
                 ),
                 CustomFabrics(
                   title: "Bombay Rayon",
-                  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM-GL2oqtlkDG0qhYKaXwH04hWnr5Pgi5A-g&usqp=CAU",
+                  image:
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM-GL2oqtlkDG0qhYKaXwH04hWnr5Pgi5A-g&usqp=CAU",
                 ),
                 CustomFabrics(
                   title: "Ormezzano",
-                  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzZxg0jPnvKadplEuJPYmgUCbOLL5BwV9b5g&usqp=CAU",
+                  image:
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzZxg0jPnvKadplEuJPYmgUCbOLL5BwV9b5g&usqp=CAU",
                 ),
                 CustomFabrics(
                   title: "Siyarams",
-                  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2Bw__QshQySyQIaOTDlstbpW3jnWVWSBXCg&usqp=CAU",
+                  image:
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2Bw__QshQySyQIaOTDlstbpW3jnWVWSBXCg&usqp=CAU",
                 ),
               ],
             ),
@@ -956,7 +967,8 @@ class CustomTailorsNearYou extends StatelessWidget {
               child: Text(
                 "Tailors Near You",
                 textScaleFactor: 1.3,
-                style: TextStyle(fontWeight: FontWeight.w400, color: Colors.black),
+                style:
+                    TextStyle(fontWeight: FontWeight.w400, color: Colors.black),
               ),
             ),
           ),
@@ -977,7 +989,8 @@ class CustomTailorsNearYou extends StatelessWidget {
                         children: [
                           GestureDetector(
                               onTap: () {
-                                tailorcontroller.fetchProduct(tailorcontroller.tailorlist.value.data[index].id);
+                                tailorcontroller.fetchProduct(tailorcontroller
+                                    .tailorlist.value.data[index].id);
                                 Get.to(() => const TailorDetails());
                               },
                               child: Card(
@@ -989,7 +1002,8 @@ class CustomTailorsNearYou extends StatelessWidget {
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Image.network(
-                                          tailorcontroller.tailorlist.value.data[index].feature,
+                                          tailorcontroller.tailorlist.value
+                                              .data[index].feature,
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -1000,7 +1014,8 @@ class CustomTailorsNearYou extends StatelessWidget {
                                     Column(
                                       children: [
                                         Text(
-                                          tailorcontroller.tailorlist.value.data[index].name,
+                                          tailorcontroller.tailorlist.value
+                                              .data[index].name,
                                           style: const TextStyle(
                                             fontSize: 25,
                                           ),
@@ -1009,7 +1024,8 @@ class CustomTailorsNearYou extends StatelessWidget {
                                           children: [
                                             const Icon(Icons.place),
                                             Text(
-                                              tailorcontroller.tailorlist.value.data[index].address,
+                                              tailorcontroller.tailorlist.value
+                                                  .data[index].address,
                                             ),
                                           ],
                                         ),
@@ -1061,7 +1077,8 @@ class CustomListview extends StatelessWidget {
               child: Text(
                 "Fabrics",
                 textScaleFactor: 1.3,
-                style: TextStyle(fontWeight: FontWeight.w400, color: Colors.black),
+                style:
+                    TextStyle(fontWeight: FontWeight.w400, color: Colors.black),
               ),
             ),
           ),
@@ -1073,30 +1090,37 @@ class CustomListview extends StatelessWidget {
               children: const [
                 CustomFabrics(
                   title: "Raymond",
-                  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOYXtGacH4lWrNV8B8wruoGQE_kkSU5QrF2Q&usqp=CAU",
+                  image:
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOYXtGacH4lWrNV8B8wruoGQE_kkSU5QrF2Q&usqp=CAU",
                 ),
                 CustomFabrics(
                     title: "Loro Piana",
-                    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZ3QOzdwc6NH96AoEnjIpozN_Q3pcyRHF5FA&usqp=CAU"),
+                    image:
+                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZ3QOzdwc6NH96AoEnjIpozN_Q3pcyRHF5FA&usqp=CAU"),
                 CustomFabrics(
                   title: "Vardhman",
-                  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0QnGQ4f9OnPHchsIj8_JQ51zH_y9AcYTjdg&usqp=CAU",
+                  image:
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0QnGQ4f9OnPHchsIj8_JQ51zH_y9AcYTjdg&usqp=CAU",
                 ),
                 CustomFabrics(
                   title: "Fabindia",
-                  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnBrHi1vkQar1BTKhJfUAHAQMGUeph9STKGw&usqp=CAU",
+                  image:
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnBrHi1vkQar1BTKhJfUAHAQMGUeph9STKGw&usqp=CAU",
                 ),
                 CustomFabrics(
                   title: "Bombay Rayon",
-                  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM-GL2oqtlkDG0qhYKaXwH04hWnr5Pgi5A-g&usqp=CAU",
+                  image:
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM-GL2oqtlkDG0qhYKaXwH04hWnr5Pgi5A-g&usqp=CAU",
                 ),
                 CustomFabrics(
                   title: "Ormezzano",
-                  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzZxg0jPnvKadplEuJPYmgUCbOLL5BwV9b5g&usqp=CAU",
+                  image:
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzZxg0jPnvKadplEuJPYmgUCbOLL5BwV9b5g&usqp=CAU",
                 ),
                 CustomFabrics(
                   title: "Siyarams",
-                  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2Bw__QshQySyQIaOTDlstbpW3jnWVWSBXCg&usqp=CAU",
+                  image:
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2Bw__QshQySyQIaOTDlstbpW3jnWVWSBXCg&usqp=CAU",
                 ),
               ],
             ),
@@ -1161,7 +1185,8 @@ class CustomRequestStitch extends StatelessWidget {
                       Navigator.pushNamed(context, "/dashboard");
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(const Color(0xFF073B4C)),
+                      backgroundColor:
+                          MaterialStateProperty.all(const Color(0xFF073B4C)),
                       // 0xff1A2D50
                     ),
                     child: const Text('Request now'),
@@ -1198,7 +1223,9 @@ class CustomRequestForm extends StatelessWidget {
             hintText: "$title",
           ),
           validator: (String? value) {
-            return (value != null && value.contains('@')) ? 'Do not use the @ char.' : null;
+            return (value != null && value.contains('@'))
+                ? 'Do not use the @ char.'
+                : null;
           },
         ),
       ),
@@ -1234,7 +1261,8 @@ class CustomFabrics extends StatelessWidget {
                 height: 100,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  image: DecorationImage(image: NetworkImage('$image'), fit: BoxFit.fill),
+                  image: DecorationImage(
+                      image: NetworkImage('$image'), fit: BoxFit.fill),
                 ),
               ),
               Text("$title"),
@@ -1378,7 +1406,9 @@ class CustomHomeSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: TextForm.horizontalScreenPadding, vertical: TextForm.verticalscreenPadding),
+      padding: EdgeInsets.symmetric(
+          horizontal: TextForm.horizontalScreenPadding,
+          vertical: TextForm.verticalscreenPadding),
       child: TextFormField(
         decoration: const InputDecoration(
           hintText: "Search Tailor...",

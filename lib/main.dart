@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tailor_app/bindings/controller_binding.dart';
+import 'package:flutter_tailor_app/utility/privacysetting.dart';
 import 'package:flutter_tailor_app/views/dashboard.dart';
+import 'package:flutter_tailor_app/views/final_cartpage.dart';
+import 'package:flutter_tailor_app/views/login.dart';
+import 'package:flutter_tailor_app/views/register.dart';
+import 'package:flutter_tailor_app/views/search.dart';
+import 'package:flutter_tailor_app/views/splash.dart';
 
 import 'package:get/get.dart';
 
@@ -33,24 +39,25 @@ class MyApp extends StatelessWidget {
       ),
       initialBinding: ControllerBinding(),
 
-      home: const DashboradScreen(),
-      // routes: {
-      //   "/": (context) => const SpalshScreen(),
-      //   "/dashboard": (context) => const DashboradScreen(),
-      //   // "/partner": (context) => const RegisterTailorPartner(),
-      //   // "/login": (context) => const LoginScreen(),
-      //   "/register": (context) => const RegisterScreen(),
-      //   // "rate": (context) => const TailorRating(),
-      //   // "search": (context) => const Hom(),
+      // home: const DashboradScreen(),
 
-      //   "/add_tailor": (context) => AddTailor(),
-      //   "/privacy": (context) => const PrivacyScreen(),
-      //   "/forgetpasswordpage": (context) => const ForgetPassword(),
-      //   // "/tailordetails": (context) =>  TailorDetails(),
-      //   "/productdetails": (context) => const ProductDetailsPage(),
-      //   "cart": (context) => CardProducts(),
-      //   "confirm": (context) => ConfirmPage(),
-      // },
+      routes: {
+        "/": (context) => const SpalshScreen(),
+        "dashboard": (context) => const DashboradScreen(),
+        // "/partner": (context) => const RegisterTailorPartner(),
+        "/login": (context) => const LoginScreen(),
+        "/register": (context) => const RegisterScreen(),
+        // "rate": (context) => const TailorRating(),
+        "search": (context) => const HomeView(),
+
+        // "/add_tailor": (context) => AddTailor(),
+        "/privacy": (context) => const PrivacyScreen(),
+        // "/forgetpasswordpage": (context) => const ForgetPassword(),
+        // "/tailordetails": (context) =>  TailorDetails(),
+        // "/productdetails": (context) => const ProductDetailsPage(),
+        "cart": (context) => CardProducts(),
+        // "confirm": (context) => ConfirmPage(),
+      },
     );
   }
 }

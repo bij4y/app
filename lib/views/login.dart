@@ -526,6 +526,22 @@ class _LoginScreenState extends State<LoginScreen> {
                             ],
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 17, right: 17),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    Get.to(const DashboradScreen());
+                                  },
+                                  child: const Text('Skip For Now'),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           child: Text(

@@ -9,8 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DrawerScreen extends StatelessWidget {
+  const DrawerScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    var usercontroller = Get.put(UserController());
     Future getuser() async {
       var response = await Api().getuser('user');
       var data = json.decode(response.body);
@@ -21,27 +24,20 @@ class DrawerScreen extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: [
-          FutureBuilder(
-            future: getuser(),
-            builder: (context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                return UserAccountsDrawerHeader(
-                  accountName: Text(snapshot.data['name']),
-                  accountEmail: Text(snapshot.data['email']),
-                  currentAccountPicture: CircleAvatar(
-                    child: Text(snapshot.data['name']
-                        .toString()
-                        .substring(0, 1)
-                        .toUpperCase()),
-                  ),
-                );
-              } else if (snapshot.hasError) {
-                return Text("Error");
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            },
-          ),
+          Obx(() {
+            return usercontroller.user.value.name == null
+                ? UserAccountsDrawerHeader(
+                    accountName: Text(usercontroller.user.value.name),
+                    accountEmail: Text(usercontroller.user.value.email),
+                    currentAccountPicture: CircleAvatar(
+                      child: Text(usercontroller.user.value.name
+                          .toString()
+                          .substring(0, 1)
+                          .toUpperCase()),
+                    ),
+                  )
+                : SizedBox();
+          }),
           InkWell(
             onTap: () {
               Navigator.pushNamed(context, 'dashboard');

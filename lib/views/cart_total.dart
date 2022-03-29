@@ -44,7 +44,10 @@ class CArtTotal extends StatelessWidget {
                       topLeft: Radius.circular(40),
                     ),
                     boxShadow: [
-                      BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 5),
+                      BoxShadow(
+                          color: Colors.black38,
+                          spreadRadius: 0,
+                          blurRadius: 5),
                     ],
                   ),
                   width: MediaQuery.of(context).size.width,
@@ -59,9 +62,10 @@ class CArtTotal extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Items( ${cartController.cartItems.value.data.length} )"),
+                            Text(
+                                "Items( ${cartController.cartItems.value.data.length} )"),
                             //               ),
-                            // Text("Total :" + controller.total.toString())
+                            // Text("Total :" + cartController.cartItems.value.data.a.toString())
                           ],
                         ),
                         Padding(
@@ -71,8 +75,10 @@ class CArtTotal extends StatelessWidget {
                               Expanded(
                                   child: ElevatedButton(
                                 style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(const Color(0xffffbf00)),
-                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      const Color(0xffffbf00)),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
@@ -82,7 +88,10 @@ class CArtTotal extends StatelessWidget {
                                   padding: EdgeInsets.all(15.0),
                                   child: Text(
                                     'Proceed to checkout',
-                                    style: TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.w400),
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w400),
                                   ),
                                 ),
                                 onPressed: () {

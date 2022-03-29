@@ -7,7 +7,7 @@ import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Api {
-  String baseUrl = "http://192.168.254.16:8000/api/";
+  String baseUrl = "http://192.168.18.8:8000/api/";
 
   Future loginRegister(Map data, String endPoint) async {
     String url = baseUrl + endPoint;
